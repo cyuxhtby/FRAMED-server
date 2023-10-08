@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="tailwind.css" rel="stylesheet">
+    <title>Chat Test</title>
+</head>
+
+<body class="bg-gray-200 h-screen flex items-center justify-center">
+    <div class="bg-white p-8 rounded-lg shadow-md w-1/2">
+        <h1 class="text-2xl mb-4">Chat Room</h1>
+        <label for="room-id-input" class="text-lg mb-2 block">Room ID:</label>
+        <input id="room-id-input" type="text" class="border p-2 w-full mb-4" placeholder="Enter room ID...">
+        <button id="join-room-btn" class="bg-green-500 text-white mt-4 p-2 w-full rounded mb-4">Join Room</button>
+        <div id="chat-box" class="bg-gray-100 p-4 h-64 overflow-y-auto mb-4"></div>
+        <input id="message-input" type="text" class="border p-2 w-full" placeholder="Type a message...">
+        <button id="send-btn" class="bg-blue-500 text-white mt-4 p-2 w-full rounded">Send</button>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>

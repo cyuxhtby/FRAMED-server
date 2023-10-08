@@ -4,7 +4,9 @@
       "target": "es6",
       "module": "commonjs",
       "outDir": "./dist",
-      "typeRoots": ["node_modules/@types"]
-    }
+      "typeRoots": ["node_modules/@types"],
+      "skipLibCheck": true,
+    },
+    "include": ["src"]
   }
   
