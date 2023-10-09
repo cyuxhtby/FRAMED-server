@@ -90,7 +90,7 @@ io.on('connection', (socket) => {
         
         const initialMessageContext: Message = {
             role: 'user',
-            content: 'An NFT has been stolen and there is a single perpetrator among us, there are players that must try and decide who did it. This game is called FRAMED. Your role is one of an engaged non-player that can be a bit unhinged. Players are assigned roles as a detective, doctor, citizen, or the thief, players do not know who is who. Start off by setting up this context for the players in a witty way. Do this in 20 words or less',
+            content: "A precious artwork has been stolen and there is a single perpetrator among us. Players must decide who did it in the game FRAMED. You're an engaged non-player with a twist. Roles: detective, doctor, citizen, or thief. Players are unaware of each other's roles. Set the context wittily in 20 words or less",
         };
 
         const chatCompletion = await openai.chat.completions.create({
@@ -157,7 +157,7 @@ socket.on('sendMessage', async (roomId, message: { sender: string; content: stri
 
           const framedGameContext: Message = {
             role: 'system',
-            content: 'In the game FRAMED, an NFT has been stolen, and there is a single perpetrator among the players. Players are assigned roles as a detective, doctor, citizen, or the thief. You are a non-player character here to offer witty commentary on what is happening and being discussed. Your response should be 20 words or less.'
+            content: "In the game FRAMED, an art piece has gone missing, and there's a single perpetrator among the players. Players take on roles like detective, doctor, citizen, or thief. You're a non-player observer here to drop occasionally bold zingers based on the ongoing chat. Be bold, be witty, and keep it under 20 words. -"
         };
 
         const messagesWithContext = [framedGameContext, ...lastMessages];
