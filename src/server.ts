@@ -17,7 +17,12 @@ const server = createServer(app);
 
 const io: SocketIOServer = new SocketIOServer(server, {
   cors: {
-    origin: '*',
+    origin: [
+      "http://localhost:5173",
+      "https://play.framed.gg",
+      "https://framed-crate.vercel.app",
+      "https://framed-delta.vercel.app"
+    ],
     methods: ["GET", "POST"],
     credentials: true
   }
@@ -130,6 +135,8 @@ socket.on('sendMessage', async (roomId, message: { sender: string; content: stri
       return; // Exit if the sender role is invalid
   }
 
+  socket.broadcast.to(roomId).emit('newMessage', { sender: 'user', content: message.content, username: message.username });
+
   // If the sender is a user, manage the AI's random response intervals
   if (message.sender === 'user') {
       // Initialize roomMessageCount and roomRandomInterval if they don't exist for the room
@@ -192,4 +199,10 @@ socket.on('sendMessage', async (roomId, message: { sender: string; content: stri
 const PORT: number = Number(process.env.PORT) || 3000;
 server.listen(PORT, '0.0.0.0', () => {
   console.log(`Server is running on port ${PORT}`);
+   // Schedule DB cleanup function
+   setInterval(async () => {
+    console.log("Running scheduled cleanup...");
+    await db.chatHistoryCleanup();
+  }, 24 * 60 * 60 * 1000);  // 24 hours in milliseconds
+
 });

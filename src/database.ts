@@ -57,3 +57,19 @@ export async function fetchLastNMessages(roomId: string, n: number): Promise<Mes
     return [];
   }
 }
+
+// Function to delete chat messages older than 24 hours
+export const chatHistoryCleanup = async () => {
+  const query = `
+    DELETE FROM chat_messages 
+    WHERE timestamp < NOW() - INTERVAL '24 hours'
+  `;
+
+  try {
+    await pool.query(query);
+    console.log("Old messages deleted successfully.");
+  } catch (err) {
+    console.error('Error deleting old messages:', err);
+  }
+};
+
