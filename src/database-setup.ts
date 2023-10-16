@@ -1,5 +1,5 @@
-import { Pool } from 'pg';
-import dotenv from 'dotenv';
+import { Pool } from "pg";
+import dotenv from "dotenv";
 
 dotenv.config();
 
@@ -15,7 +15,7 @@ const createTable = `
 CREATE TABLE chat_messages (
   id SERIAL PRIMARY KEY,
   room_id VARCHAR(255) NOT NULL,
-  username VARCHAR(255), 
+  player_id VARCHAR(2), 
   role VARCHAR(50) NOT NULL,
   content TEXT NOT NULL,
   timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP
