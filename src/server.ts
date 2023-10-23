@@ -216,7 +216,7 @@ io.on("connection", (socket) => {
   
     const deathContext: Message = {
       role: "system",
-      content: `Tell a story about how ${playerName} was killed during the night in an art gallery by an art thief in 20 words or less.`,
+      content: `There is an art theif who striked during the night who kills, steales, and frames attendies of the exhibit. That is your loose context, now come up with an original short narrative as to how ${playerName} was killed during the night in 30 words or less`,
     };
   
     try {
