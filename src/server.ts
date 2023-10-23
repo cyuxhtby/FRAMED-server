@@ -74,11 +74,12 @@ io.on("connection", (socket) => {
     }
     // console.log(`Initial message request received for room: ${roomId}`);
 
+    const playerName = PLAYER_NAMES[player_id];
     // Message stating user joined
     const userJoinedMessage: Message = {
       player_id,
       role: "system",
-      content: `${player_id} joined`,
+      content: `${playerName} joined`,
     };
     io.to(roomId).emit("newMessage", userJoinedMessage);
     await db.storeMessage(roomId, {
@@ -216,7 +217,7 @@ io.on("connection", (socket) => {
   
     const deathContext: Message = {
       role: "system",
-      content: `There is an art theif who striked during the night who kills, steales, and frames attendies of the exhibit. That is your loose context, now come up with an original short narrative as to how ${playerName} was killed during the night in 30 words or less`,
+      content: `There is an art theif who strikes during the night who kills, steals, and frames attendies of the fine art exhibit. That is your loose context, now come up with an original short narrative as to how ${playerName} was killed during the night in 23 words or less`,
     };
   
     try {
