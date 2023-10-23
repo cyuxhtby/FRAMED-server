@@ -66,56 +66,56 @@ io.on("connection", (socket) => {
     }
   });
 
-  // socket.on("requestInitialMessage", async ({ roomId, player_id }, ack) => {
-  //   if (!roomId) {
-  //     console.error("roomId is undefined");
-  //     ack && ack(false);
-  //     return;
-  //   }
-  //   console.log(`Initial message request received for room: ${roomId}`);
+  socket.on("requestInitialMessage", async ({ roomId, player_id }, ack) => {
+    if (!roomId) {
+      console.error("roomId is undefined");
+      ack && ack(false);
+      return;
+    }
+    // console.log(`Initial message request received for room: ${roomId}`);
 
-  //   // Message stating user joined
-  //   const userJoinedMessage: Message = {
-  //     player_id,
-  //     role: "system",
-  //     content: `${player_id} joined`,
-  //   };
-  //   io.to(roomId).emit("newMessage", userJoinedMessage);
-  //   await db.storeMessage(roomId, {
-  //     player_id: userJoinedMessage.player_id,
-  //     role: userJoinedMessage.role as "system" | "user" | "assistant",
-  //     content: userJoinedMessage.content,
-  //   });
+    // Message stating user joined
+    const userJoinedMessage: Message = {
+      player_id,
+      role: "system",
+      content: `${player_id} joined`,
+    };
+    io.to(roomId).emit("newMessage", userJoinedMessage);
+    await db.storeMessage(roomId, {
+      player_id: userJoinedMessage.player_id,
+      role: userJoinedMessage.role as "system" | "user" | "assistant",
+      content: userJoinedMessage.content,
+    });
 
-  //   // Check if initial message has already been sent for this room
-  //   if (!roomsWithInitialMessage.has(roomId)) {
-  //     roomsWithInitialMessage.add(roomId);
-  //     console.log(`Sending initial message for room: ${roomId}`);
+    // // Check if initial message has already been sent for this room
+    // if (!roomsWithInitialMessage.has(roomId)) {
+    //   roomsWithInitialMessage.add(roomId);
+    //   console.log(`Sending initial message for room: ${roomId}`);
 
-  //     const initialMessageContext: Message = {
-  //       role: "user",
-  //       content:
-  //         "A precious artwork has been stolen and there is a single perpetrator among us. Players must decide who did it in the game FRAMED. You're an engaged non-player with a twist. Roles: detective, doctor, citizen, or thief. Players are unaware of each other's roles. Set the context wittily in 20 words or less",
-  //     };
+    //   const initialMessageContext: Message = {
+    //     role: "user",
+    //     content:
+    //       "A precious artwork has been stolen and there is a single perpetrator among us. Players must decide who did it in the game FRAMED. You're an engaged non-player with a twist. Roles: detective, doctor, citizen, or thief. Players are unaware of each other's roles. Set the context wittily in 20 words or less",
+    //   };
 
-  //     const chatCompletion = await openai.chat.completions.create({
-  //       messages: [initialMessageContext],
-  //       model: "gpt-3.5-turbo",
-  //     });
+    //   const chatCompletion = await openai.chat.completions.create({
+    //     messages: [initialMessageContext],
+    //     model: "gpt-3.5-turbo",
+    //   });
 
-  //     const assistantOpeningRemark = chatCompletion.choices[0]?.message.content.trim();
-  //     console.log(" Assistant OpeningRemark:", assistantOpeningRemark);
+    //   const assistantOpeningRemark = chatCompletion.choices[0]?.message.content.trim();
+    //   console.log(" Assistant OpeningRemark:", assistantOpeningRemark);
 
-  //     io.to(roomId).emit("newMessage", { sender: "assistant", content: assistantOpeningRemark });
-  //     await db.storeMessage(roomId, { player_id: null, role: "assistant", content: assistantOpeningRemark });
+    //   io.to(roomId).emit("newMessage", { sender: "assistant", content: assistantOpeningRemark });
+    //   await db.storeMessage(roomId, { player_id: null, role: "assistant", content: assistantOpeningRemark });
 
-  //     roomsWithInitialMessage.add(roomId);
-  //   } else {
-  //     console.log(`Initial message already sent for room: ${roomId}`);
-  //   }
+    //   roomsWithInitialMessage.add(roomId);
+    // } else {
+    //   console.log(`Initial message already sent for room: ${roomId}`);
+    // }
 
-  //   ack && ack(true);
-  // });
+    ack && ack(true);
+  });
 
   socket.on("sendMessage", async (roomId, message: { sender: string; content: string; player_id: string }) => {
     console.log("Received roomId:", roomId);
