@@ -40,6 +40,9 @@ type Message = {
 
 const PLAYER_NAMES = ["Soup Enjoyer", "Pineapple Guy", "Zippy", "Dizzy Dan"];
 
+const processedDeaths = {};
+
+
 let roomMessages: { [roomId: string]: Message[] } = {};
 let roomsWithInitialMessage: Set<string> = new Set();
 
@@ -208,6 +211,16 @@ io.on("connection", (socket) => {
   });
 
   socket.on("playerDeath", async (roomId, player_id) => {
+    const eventKey = `${roomId}-${player_id}`;
+  if (processedDeaths[eventKey]) {
+    console.log(`Death event for player ${player_id} in room ${roomId} has already been processed.`);
+    return;
+  }
+  
+  // Mark the event as processed
+  processedDeaths[eventKey] = true;
+
+
     if (!roomId || player_id === undefined) {
       console.error("Missing required parameters. Room ID:", roomId, "Player ID:", player_id);
       return;
